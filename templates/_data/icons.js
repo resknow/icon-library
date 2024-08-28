@@ -3,38 +3,56 @@ const glob = require('glob');
 const fs = require('fs');
 
 function getIcons() {
-    const icons = {
-        heroicons: {
+    const sets = [
+        {
+            path: 'assets/icons/heroicons',
+            id: 'heroicons',
             title: 'Heroicons',
             icons: []
         },
-        remix: {
+        {
+            path: 'assets/icons/remix',
+            id: 'remix',
             title: 'Remix Icons',
             icons: []
+        },
+        {
+            path: 'assets/icons/bootstrap',
+            id: 'bootstrap',
+            title: 'Bootstrap Icons',
+            icons: []
         }
-    }
-    const heroicons = glob.sync('assets/icons/heroicons/*.svg');
-    const remix = glob.sync('assets/icons/remix/*.svg');
+    ];
 
-    heroicons.forEach((icon) => {
-        icons.heroicons.icons.push({
-            name: icon.replace('assets/icons/heroicons/', '').replace('.svg', ''),
-            contents: fs.readFileSync(icon, 'utf8')
+    sets.map((set) => {
+        let icons = glob.sync(set.path + '/*.svg');
+
+        icons.forEach((icon) => {
+            set.icons.push({
+                name: icon.replace(set.path + '/', '').replace('.svg', ''),
+                contents: fs.readFileSync(icon, 'utf8')
+            });
         });
+
+        // Sort icons by name
+        set.icons.sort((a, b) => {
+            if (a.name < b.name) {
+                return -1;
+            }
+
+            if (a.name > b.name) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        return set;
     });
 
-    remix.forEach((icon) => {
-        icons.remix.icons.push({
-            name: icon.replace('assets/icons/remix/', '').replace('.svg', ''),
-            contents: fs.readFileSync(icon, 'utf8')
-        });
-    });
+    console.log(sets);
 
-    // Sort by icon name
-    icons.heroicons.icons.sort((a, b) => a.name.localeCompare(b.name));
-    icons.remix.icons.sort((a, b) => a.name.localeCompare(b.name));
-
-    return icons;
+    return sets;
 }
 
 module.exports = () => {

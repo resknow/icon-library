@@ -16,9 +16,9 @@ title: Icon Library
                 <h2>Icon Library</h2>
                 <nav>
                     <ul class="flex flex-wrap items-center gap-4 text-sm" role="list">
-                        {% for key, set in icons %}
+                        {% for set in icons %}
                             <li>
-                                <a href="#{{ key }}">{{ set.title }}</a>
+                                <a href="#{{ set.id }}">{{ set.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -30,8 +30,8 @@ title: Icon Library
             </form>
         </div>
 
-        {% for key, set in icons %}
-            <section id="{{ key }}" class="space-y-3 py-16">
+        {% for set in icons %}
+            <section id="{{ set.id }}" class="space-y-3 py-16">
                 <h2>{{ set.title }}</h2>
                 <ul class="grid grid-cols-2 gap-sm sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6" role="list">
                     {% for icon in set.icons %}
@@ -39,7 +39,7 @@ title: Icon Library
                             x-data="{ copied: false }"
                             @click="window.copyInnerHTMLToClipboard($el.querySelector('[data-contents]')); copied = true; setTimeout(() => copied = false, 1000)"
                             :hidden="'{{ icon.name }}'.includes(query) ? false : true"
-                            class="cursor-pointer grid grid-rows-[60%_40%] bg-white/80 border border-white backdrop-blur-sm rounded aspect-square hover:shadow-lg"
+                            class="cursor-pointer grid grid-rows-[60%_40%] bg-white/80 border border-black/10 backdrop-blur-sm rounded aspect-square hover:shadow-lg"
                         >
                             <div x-show="!copied" data-contents class="flex justify-center items-center text-xl">
                                 {{ icon.contents | safe }}
