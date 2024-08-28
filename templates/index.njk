@@ -36,13 +36,18 @@ title: Icon Library
                 <ul class="grid grid-cols-2 gap-sm sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6" role="list">
                     {% for icon in set.icons %}
                         <li
+                            x-data="{ copied: false }"
+                            @click="window.copyInnerHTMLToClipboard($el.querySelector('[data-contents]')); copied = true; setTimeout(() => copied = false, 1000)"
                             :hidden="'{{ icon.name }}'.includes(query) ? false : true"
-                            class="grid grid-rows-[60%_40%] bg-white border border-gray-300/50 rounded aspect-square hover:border-gray-400 hover:shadow-lg"
+                            class="cursor-pointer grid grid-rows-[60%_40%] bg-white/80 border border-white backdrop-blur-sm rounded aspect-square hover:shadow-lg"
                         >
-                            <div class="flex justify-center items-center text-xl">
+                            <div x-show="!copied" data-contents class="flex justify-center items-center text-xl">
                                 {{ icon.contents | safe }}
                             </div>
-                            <p class="px-3 py-2 text-xs text-center border-t">{{ icon.name }}</p>
+                            <div x-show="copied" x-cloak class="flex items-center justify-center text-center">
+                                <p class="text-sm font-bold text-emerald-600">Copied!</p>
+                            </div>
+                            <p class="px-3 py-2 text-xs text-center border-t border-t-white">{{ icon.name }}</p>
                         </li>
                     {% endfor %}
                 </ul>
