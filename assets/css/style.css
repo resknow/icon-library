@@ -1,0 +1,147 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import-glob "../../templates/_includes/components/**/style.css";
+@import 'tailwindcss/utilities';
+
+@layer base {
+	html {
+		@apply scroll-smooth;
+	}
+
+	body {
+		@apply text-base text-gray-800 antialiased;
+		background-image: url('/assets/images/mesh.png');
+		background-position: top;
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+
+	:where([id]) {
+		@apply scroll-m-xl;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	.h1,
+	.h2,
+	.h3,
+	.h4,
+	.h5,
+	.h6 {
+		@apply text-balance tracking-tight leading-tight font-bold;
+	}
+
+	h1,
+	.h1 {
+		@apply text-4xl;
+	}
+
+	h2,
+	.h2 {
+		@apply text-2xl;
+	}
+
+	h3,
+	.h3 {
+		@apply text-xl;
+	}
+
+	h4,
+	.h4 {
+		@apply text-lg;
+	}
+
+	a {
+		@apply text-link relative underline underline-offset-2 decoration-black/25 decoration-1 hover:decoration-current;
+	}
+
+	[disabled] {
+		@apply opacity-50 cursor-not-allowed;
+	}
+
+	[hidden] {
+		display: none !important;
+	}
+
+	svg {
+		@apply fill-current w-[1em] h-[1em];
+	}
+
+	/* Remove all animations and transitions for people that prefer not to see them */
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+
+	/* Override Cookie Consent button color */
+	cookie-consent-banner button {
+		@apply text-white font-bold shadow-xl;
+	}
+
+	form {
+		@apply accent-primary;
+	}
+
+	label {
+		@apply block text-inherit font-bold leading-none;
+	}
+
+	input[type='text'],
+	input[type='password'],
+	input[type='tel'],
+	input[type='email'],
+	input[type='number'],
+	input[type='datetime-local'],
+	input[type='date'],
+	select,
+	textarea {
+		@apply appearance-none bg-white/90 backdrop-blur-sm rounded-full text-black block text-inherit text-base py-2 px-3 w-full;
+	}
+
+	input[type='text'][data-state='invalid'],
+	input[type='password'][data-state='invalid'],
+	input[type='tel'][data-state='invalid'],
+	input[type='email'][data-state='invalid'],
+	input[type='number'][data-state='invalid'],
+	input[type='datetime-local'][data-state='invalid'],
+	input[type='date'][data-state='invalid'],
+	select[data-state='invalid'],
+	textarea[data-state='invalid'] {
+		@apply border-red-500;
+	}
+
+	input[type='text']:focus,
+	input[type='password']:focus,
+	input[type='tel']:focus,
+	input[type='email']:focus,
+	input[type='number']:focus,
+	input[type='datetime-local']:focus,
+	input[type='date']:focus,
+	select:focus,
+	textarea:focus {
+		@apply border-secondary ring-2 ring-offset-1 ring-secondary-contrast outline-none;
+	}
+}
+
+@layer components {
+}
+
+@layer utilities {
+	.container {
+		padding-inline: theme(spacing.container);
+		margin-inline: auto;
+		max-width: unset;
+	}
+
+	.text-balance {
+		text-wrap: balance;
+	}
+}

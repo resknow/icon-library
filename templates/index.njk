@@ -1,0 +1,53 @@
+---
+title: Icon Library
+---
+
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+
+    <div
+        x-data="{ query: '' }"
+        x-init="const urlParams = new URLSearchParams(window.location.search); query = urlParams.get('search') || '';"
+        class="container"
+    >
+        <div class="flex flex-wrap gap-8 justify-between items-center pt-20">
+            <div>
+                <h2>Icon Library</h2>
+                <nav>
+                    <ul class="flex flex-wrap items-center gap-4 text-sm" role="list">
+                        {% for key, set in icons %}
+                            <li>
+                                <a href="#{{ key }}">{{ set.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+            <form class="relative md:w-64">
+                {% icon "search", "z-40 fill-gray-600 absolute left-3 top-3" %}
+                <input x-model="query" type="text" name="search" placeholder="Search icons" class="!pl-10">
+            </form>
+        </div>
+
+        {% for key, set in icons %}
+            <section id="{{ key }}" class="space-y-3 py-16">
+                <h2>{{ set.title }}</h2>
+                <ul class="grid grid-cols-2 gap-sm sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6" role="list">
+                    {% for icon in set.icons %}
+                        <li
+                            :hidden="'{{ icon.name }}'.includes(query) ? false : true"
+                            class="grid grid-rows-[60%_40%] bg-white border border-gray-300/50 rounded aspect-square hover:border-gray-400 hover:shadow-lg"
+                        >
+                            <div class="flex justify-center items-center text-xl">
+                                {{ icon.contents | safe }}
+                            </div>
+                            <p class="px-3 py-2 text-xs text-center border-t">{{ icon.name }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endfor %}
+    </div>
+
+{% endblock %}
